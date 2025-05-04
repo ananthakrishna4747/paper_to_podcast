@@ -1,0 +1,15 @@
+# Core dependencies
+openai>=1.74.0
+openai-agents>=0.0.10
+langchain>=0.1.0  # Ensuring we have the right package
+arxiv>=2.2.0
+pypdf2>=3.0.1
+python-dotenv>=1.1.0
+pydub>=0.25.1
+requests>=2.32.3
+
+# UI
+streamlit>=1.20.0
+
+# File handling
+python-multipart>=0.0.6
