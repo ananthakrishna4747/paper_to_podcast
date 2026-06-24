@@ -18,7 +18,7 @@ Reading papers is slow; listening on a walk isn't. Intellipod runs a **multi-age
 - **Configurable scripts** — choose podcast duration (5–30 min), speaker count, and speaker gender mix
 - **PDF → script → audio** in one flow, with the finished episode playable or downloadable directly from the UI
 
-## Demo
+## Sample Animation
 
 ![Intellipod demo](docs/intellipod-demo.gif)
 
