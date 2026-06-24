@@ -1,91 +1,75 @@
-Installation
-Prerequisites
+# Intellipod — AI-Powered Research Podcast Generator
 
-Python 3.8 or higher
-An OpenAI API key (for script generation and audio synthesis)
+Turns a dense research paper into a listenable podcast. Search arXiv (or hand it a paper ID), and a small team of LLM agents finds the paper, reads it, writes a script, and synthesizes audio — in 3, 10, or 30-minute formats.
 
-Clone the Repository
-bashgit clone https://github.com/yourusername/arxiv-podcast-generator.git
-cd arxiv-podcast-generator
-Set Up Environment
+## What it does
 
-Create a virtual environment:
+Reading papers is slow; listening on a walk isn't. Intellipod runs a **multi-agent pipeline** built on the OpenAI Agents SDK: a search agent queries arXiv (via a dedicated MCP server) and resolves the right paper, a parsing stage extracts and structures the PDF text, a scripting agent turns that into a natural, multi-speaker podcast script, and an audio stage synthesizes the final narration. Everything is driven through a conversational **Streamlit** interface.
 
-bashpython -m venv venv
+![Pipeline](docs/pipeline.svg)
 
-Activate the virtual environment:
+## Key features
 
-On Windows:
-bashvenv\Scripts\activate
-On macOS/Linux:
-bashsource venv/bin/activate
+- **Conversational search** — find papers by keyword, author, or arXiv ID through natural language
+- **Multi-agent orchestration** — specialized agents for search, download, scripting, and audio, coordinated by an orchestrator with shared session memory
+- **ArXiv MCP server** — exposes paper search/download as MCP tools, decoupling the agent logic from the arXiv API
+- **Configurable scripts** — choose podcast duration (5–30 min), speaker count, and speaker gender mix
+- **PDF → script → audio** in one flow, with the finished episode playable or downloadable directly from the UI
 
-Install dependencies:
+## Tech stack
 
-bashpip install -r requirements.txt
-Configuration
+`Python` · `OpenAI Agents SDK` · `Model Context Protocol (MCP)` · `LangChain` (conversation memory) · `arxiv` API · `PyPDF2` · `pydub` · `OpenAI TTS` · `Streamlit`
 
-Create a .env file in the project root directory with the following content:
+## Repository structure
 
+```
+arxiv_podcast/
+├── main.py                  # App entry point
+├── ui/app.py                 # Streamlit chat interface
+├── agents_l/
+│   ├── orchestrator.py       # Defines + wires the agent team
+│   ├── context.py            # Shared app/session context
+│   └── memory.py             # Conversation memory helpers
+├── core/
+│   ├── search.py              # ArXiv search/download tools
+│   ├── parse.py                # PDF text extraction
+│   ├── podcast.py              # Script generation
+│   └── audio.py                 # TTS audio synthesis
+├── arxiv_mcp_server.py        # MCP server exposing arXiv tools
+└── arxiv_mcp_client.py         # MCP client used by the agents
+```
+
+## Setup
+
+```bash
+git clone https://github.com/ananthakrishna4747/paper_to_podcast.git
+cd paper_to_podcast/arxiv_podcast
+python -m venv venv
+source venv/bin/activate        # Windows: venv\Scripts\activate
+pip install -r requirements.txt
+```
+
+Create a `.env` file:
+```
 OPENAI_API_KEY=your_openai_api_key_here
-OPENAI_MODEL_ID=ft:gpt-4o-mini-2024-07-18:personal::BM4yUkOI  # Or your preferred model
+OPENAI_MODEL_ID=ft:gpt-4o-mini-2024-07-18:personal::BM4yUkOI   # or your preferred model
+```
 
-Set up logging (optional):
+Run it:
+```bash
+streamlit run main.py
+```
+This opens the app at `http://localhost:8501`.
 
-Logs are stored in arxiv_podcast.log by default. You can adjust log levels in main.py.
-Usage
-Starting the Application
-bashstreamlit run main.py
-This will start the web interface on http://localhost:8501 by default.
-Workflow
+## Workflow
 
-Search for Papers: Enter keywords or a paper ID in the chat interface
-Select a Paper: Choose a paper from the search results
-Download and Process: The application will download and extract the paper content
-Set Podcast Parameters: Choose the podcast duration and speaker preferences
-Generate Podcast: The system will create a script and synthesize audio
-Listen and Download: Play the podcast directly in the browser or download the MP3 file
+1. **Search** — enter a topic, author, or arXiv ID in the chat
+2. **Select** — pick a paper from the results
+3. **Process** — the app downloads and extracts the paper's text
+4. **Configure** — choose duration, speaker count, and speaker genders
+5. **Generate** — the script and audio are produced automatically
+6. **Listen** — play in-browser or download the `.mp3`
 
-Architecture
-The application is structured as follows:
+## License
 
-main.py: Application entry point
-core/: Core functionality modules
-
-search.py: ArXiv search functions
-parse.py: PDF text extraction
-podcast.py: Script generation
-audio.py: Audio synthesis
-
-
-agents_l/: Agent framework components
-
-context.py: Application context
-memory.py: Conversation memory
-orchestrator.py: Agent workflow orchestration
-
-
-ui/: User interface
-
-app.py: Streamlit application
-
-
-
-Customization
-You can customize the podcast generation by modifying:
-
-Duration: Set podcast length (5, 10, 15, 20, or 30 minutes)
-Speaker Count: Choose how many speakers to include
-Speaker Genders: Select gender distribution for voice variety
-Voice Models: Modify the voice assignment in audio.py
-
-Requirements
-The application uses the following key dependencies:
-
-openai: For GPT models and text-to-speech
-openai-agents: Agent framework
-arxiv: ArXiv API client
-pypdf2: PDF text extraction
-pydub: Audio processing
-streamlit: Web interface
-arxiv_mcp server for direct access to arxiv library for agents
+No license file is currently included in this repository — treat as personal/educational project code.
