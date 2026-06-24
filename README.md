@@ -16,6 +16,20 @@ Reading papers is slow; listening on a walk isn't. Intellipod runs a **multi-age
 - **Configurable scripts** — choose podcast duration (5–30 min), speaker count, and speaker gender mix
 - **PDF → script → audio** in one flow, with the finished episode playable or downloadable directly from the UI
 
+## User flow
+
+![User flow](docs/userflow.svg)
+
+### Example interaction *(illustrative — not a captured live session)*
+
+> **User:** "Turn arXiv 2305.14314 into a 10-minute, 2-speaker podcast."
+>
+> **Intellipod:** "Found 'QLoRA: Efficient Finetuning of Quantized LLMs' (2305.14314). Generating a 10-minute, 2-speaker script… done — here's your episode: `qlora_episode.mp3`."
+
+## Real-world application
+
+This sits in the same "research-to-audio" category that tools like Google's NotebookLM popularized — except scoped specifically to arXiv, with the search/download/script/audio stages split into separate MCP-callable agents rather than one monolithic prompt. That separation is what makes each stage independently testable and swappable (e.g. trying a different TTS backend without touching the scripting logic).
+
 ## Tech stack
 
 `Python` · `OpenAI Agents SDK` · `Model Context Protocol (MCP)` · `LangChain` (conversation memory) · `arxiv` API · `PyPDF2` · `pydub` · `OpenAI TTS` · `Streamlit`
