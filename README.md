@@ -1,5 +1,7 @@
 # Intellipod — AI-Powered Research Podcast Generator
 
+![Intellipod banner](docs/intellipod-banner.jpg)
+
 Turns a dense research paper into a listenable podcast. Search arXiv (or hand it a paper ID), and a small team of LLM agents finds the paper, reads it, writes a script, and synthesizes audio — in 3, 10, or 30-minute formats.
 
 ## What it does
@@ -15,6 +17,10 @@ Reading papers is slow; listening on a walk isn't. Intellipod runs a **multi-age
 - **ArXiv MCP server** — exposes paper search/download as MCP tools, decoupling the agent logic from the arXiv API
 - **Configurable scripts** — choose podcast duration (5–30 min), speaker count, and speaker gender mix
 - **PDF → script → audio** in one flow, with the finished episode playable or downloadable directly from the UI
+
+## Demo
+
+![Intellipod demo](docs/intellipod-demo.gif)
 
 ## User flow
 
