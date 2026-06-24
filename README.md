@@ -84,6 +84,14 @@ This opens the app at `http://localhost:8501`.
 5. **Generate** — the script and audio are produced automatically
 6. **Listen** — play in-browser or download the `.mp3`
 
+## Roadmap
+
+- [ ] Docker packaging for one-command setup (currently a local venv + Streamlit run)
+- [ ] Thin FastAPI gateway in front of the agent pipeline to support multiple concurrent users
+- [ ] Kubernetes manifests for scaling audio-synthesis workers independently from the script-generation agents
+- [ ] Vector store cache of parsed papers so repeat queries skip re-parsing the PDF
+- [ ] GitHub Actions CI for linting and a smoke test on the agent pipeline
+
 ## License
 
 No license file is currently included in this repository — treat as personal/educational project code.
